@@ -5,5 +5,84 @@
   "projectType": "application",
   "tags": [],
   "// targets": "to see all targets run: nx show project first-app --web",
-  "targets": {}
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/first-app",
+        "index": "apps/first-app/src/index.html",
+        "baseHref": "/",
+        "main": "apps/first-app/src/main.ts",
+        "tsConfig": "apps/first-app/tsconfig.app.json",
+        "assets": [
+          "apps/first-app/src/favicon.ico",
+          "apps/first-app/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "apps/first-app/webpack.config.ts"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/first-app/src/environments/environment.ts",
+              "with": "apps/first-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/first-app/webpack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "first-app:build",
+        "hmr": true,
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "first-app:build:development"
+        },
+        "production": {
+          "buildTarget": "first-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "first-app:build",
+        "watch": false,
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "first-app:build:development"
+        },
+        "production": {
+          "buildTarget": "first-app:build:production"
+        }
+      }
+    }
+  }
 }
