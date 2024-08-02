@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "remote-app/Module": ["apps/remote-app/src/remote-entry.ts"]
+      "remote-app/Module": ["apps/remote-app/src/remote-entry.ts"],
+      "second-app/Module": ["apps/second-app/src/remote-entry.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

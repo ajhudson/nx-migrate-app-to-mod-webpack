@@ -1,8 +1,11 @@
+import * as React from 'react';
 import styled from '@emotion/styled';
 
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+
+const SecondApp = React.lazy(() => import('second-app/Module'));
 
 const StyledApp = styled.div`
   // Your style here
@@ -10,46 +13,20 @@ const StyledApp = styled.div`
 
 export function App() {
   return (
-    <StyledApp>
-      <NxWelcome title="first-app" />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
+    <React.Suspense fallback={null}>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/second-app">SecondApp</Link>
+        </li>
+      </ul>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
+        <Route path="/" element={<NxWelcome title="first-app" />} />
+        <Route path="/second-app" element={<SecondApp />} />
       </Routes>
-      {/* END: routes */}
-    </StyledApp>
+    </React.Suspense>
   );
 }
 
