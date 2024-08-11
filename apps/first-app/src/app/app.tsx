@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+import ShowEnvVars from './env-vars';
 
 const SecondApp = React.lazy(() => import('second-app/Module'));
 
@@ -23,7 +24,7 @@ export function App() {
         </li>
       </ul>
       <Routes>
-        <Route path="/" element={<NxWelcome title="first-app" />} />
+        <Route path="/" element={<ShowEnvVars />} />
         <Route path="/second-app" element={<SecondApp />} />
       </Routes>
     </React.Suspense>
